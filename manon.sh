@@ -2,8 +2,16 @@
 
 # Demander le chemin du répertoire Git
 read -p "Entrez le chemin du répertoire Git : " repo_path
-# Demander le nombre de lignes à sélectionner
-read -p "Entrez le nombre de lignes à parti duquel le script fera effet : " lines_to_select
+
+# Demander le nombre de lignes à sélectionner (integer uniquement)
+while true; do
+    read -p "Entrez le nombre de lignes à partir duquel le script fera effet : " lines_to_select
+    if [[ "$lines_to_select" =~ ^[0-9]+$ ]]; then
+        break
+    else
+        echo "Veuillez entrer une valeur entière."
+    fi
+done
 
 reccurency=0
 
