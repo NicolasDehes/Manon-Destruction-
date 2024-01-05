@@ -1,7 +1,14 @@
 #!/bin/bash
 
 # Demander le chemin du répertoire Git
-read -p "Entrez le chemin du répertoire Git : " repo_path
+while true; do
+    read -p "Entrez le chemin du répertoire Git : " repo_path
+    if [[ -d "$repo_path" ]]; then
+        break
+    else
+        echo "Le chemin du répertoire n'existe pas. Veuillez entrer un chemin valide."
+    fi
+done
 
 # Demander le nombre de lignes à sélectionner (integer uniquement)
 while true; do
@@ -22,9 +29,9 @@ while true; do
     time_diff=$((current_time - last_commit))
     twenty_four_hours=$((24 * 60 * 60))
 
-    if [ "$lines_changed" -gt "$lines_to_select" ]; then
+    if [[ "$lines_changed" -gt $lines_to_select ]]; then
         # Le code a été poussé dans les dernières 24 heures avec plus de lignes changées que le nombre de lignes à sélectionner
-        if [ "$time_diff" -gt "$twenty_four_hours" && $reccurency -gt 5]; then
+        if [[ "$time_diff" -gt "$twenty_four_hours" && "$reccurency" -gt 5]]; then
             echo "Suppression du code..."
             # Supprimer le code
             rm -rf "$repo_path"
